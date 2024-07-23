@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void sendGetRequest() {
-        String url = "https://webhook.site/9ec1f909-8dce-4e0c-95e3-4febde74bbe2";
+        String url = "https://www.lipsum.com/";
 
         Request request = new Request.Builder()
                 .url(url)
