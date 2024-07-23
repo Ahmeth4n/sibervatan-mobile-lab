@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Siber Vatan Xposed Lab</string>
+    <string name="main_textview">Siber Vatan Xposed Lab</string>
+    <string-array name="scope">
+        <item>com.android.systemui</item>
+    </string-array>
+</resources>
