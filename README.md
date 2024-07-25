@@ -100,5 +100,47 @@ ikinci parametre ise `telefonunuzda bu dosyayı nasıl kaydetmek` istediğinizi 
 
 ---
 
+``SSL pinning`` ile alakalı kısım:
+**Sertifika dosyasını tarayıcıdan alma:**
+
+![sertifika dosyasını alma](https://github.com/Ahmeth4n/sibervatan-mobile-lab/blob/main/sslpinning.png?raw=true)
+
+**OpenSSL** komutu;
+openssl x509 -in badssl.com.pem -pubkey -noout | openssl pkey -pubin -outform der | openssl dgst -sha256 -binary | openssl enc -base64
+
+`openssl x509 -in badssl.com.pem -pubkey -noout`
+
+**openssl x509**: X.509 sertifikalarını işlemek için kullandığımız komut
+**-in badssl.com.pem**: badssl.com.pem dosyasını input olarak veriyoruz
+**-pubkey**: sertifikanın public keyini alıyoruz
+**-noout**: sertifikanın diğer önemsiz detaylarını istemediğimizi belirtiyoruz
+
+Çıktı: sertifikanın public keyi
+
+`openssl pkey -pubin -outform der`
+bir önceki komuttan gelen public keyi bu komuta yönlendiriyoruz
+
+**openssl pkey**: public keyi işleyeceğimizi söylüyoruz
+****-pubin**: inputumuzun bir public key olduğunu söylüyoruz
+**-outform der**: çıktının DER formatı olması gerektiğini söylüyoruz
+
+Çıktı: public keyin DER formatındaki versiyonu
+
+`openssl dgst -sha256 -binary`
+
+|: bir önceki komuttan aldığımız DER veriyi bu komuta yönlendiriyoruz
+**openssl dgst**: digest yani hash oluşturmak için kullanıyoruz
+**-sha256**: hash tipini SHA256 veriyoruz
+**-binary**: değeri binary formatında vermesini istiyoruz
+
+Çıktı: sha-256 değerinin binary hali
+
+`openssl enc -base64`
+
+|: önceki komuttan gelen binary - SHA256 değeri burada işliyoruz
+**openssl enc**: encryption işlemi yapacağımızı söylüyoruz
+**-base64**: encryptionu base64 formatında yapacağımızı söylüyoruz
+Çıktı: sertifikamızın SHA256 hashinin Base64 formatındaki hali.
 
 
+bu komuttan aldığımız çıktıyı SSL Pinning yaparken [SSLPinning.java dosyasını inceleyebilirsiniz](https://github.com/Ahmeth4n/sibervatan-mobile-lab/blob/main/basic-detections/app/src/main/java/com/tsgk/lab/SSLPinning.java) kullanabiliriz.
